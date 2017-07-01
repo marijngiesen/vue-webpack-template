@@ -14,6 +14,9 @@ var env = {{#if_or unit e2e}}process.env.NODE_ENV === 'testing'
   : {{/if_or}}config.build.env
 
 var webpackConfig = merge(baseWebpackConfig, {
+  {{#if_eq projectType "lib"}}entry: {
+    lib: './src'
+  },{{/if_eq}}
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -22,25 +25,34 @@ var webpackConfig = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
-    path: config.build.assetsRoot,
+    path: config.build.assetsRoot,{{#unless_eq projectType "lib"}}
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
-  },
+    {{/unless_eq}}{{#if_eq projectType "lib"}}
+    library: '[name]',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
+    publicPath: process.env.NODE_ENV === 'production'
+    ? config.build.assetsPublicPath
+    : config.dev.assetsPublicPath
+    {{/if_eq}}
+  },{{#if_eq projectType "lib"}}
+  externals: utils.buildExternalsFromDependencies(),{{/if_eq}}
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
-    }),
+    }),{{#unless_eq projectType "lib"}}
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       },
       sourceMap: true
-    }),
+    }),{{/unless_eq}}
     // extract css into its own file
     new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name].[contenthash].css')
-    }),
+      filename: utils.assetsPath({{#unless_eq projectType "lib"}}'css/[name].[contenthash].css'{{/unless_eq}}{{#if_eq projectType "lib"}}'[name].css'{{/if_eq}})
+    }),{{#unless_eq projectType "lib"}}
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
@@ -88,7 +100,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
-    }),
+    }),{{/unless_eq}}
     // copy custom static assets
     new CopyWebpackPlugin([
       {
@@ -122,5 +134,32 @@ if (config.build.bundleAnalyzerReport) {
   var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
+{{#unless_eq projectType "lib"}}
+module.exports = webpackConfig{{/unless_eq}}{{#if_eq projectType "lib"}}
+webpackMinifiedConfig = merge(webpackConfig, {
+  output: {
+    filename: '[name].min.js',
+    chunkFilename: '[id].min.js',
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      sourceMap: true
+    }),
+    // extract css into its own file
+    new ExtractTextPlugin({
+      filename: '[name].min.css'
+    }),
+    // Compress extracted CSS. We are using this plugin so that possible
+    // duplicated CSS from different components can be deduped.
+    new OptimizeCSSPlugin({
+      cssProcessorOptions: {
+        safe: true
+      }
+    })
+  ]
+})
 
-module.exports = webpackConfig
+module.exports = [webpackConfig, webpackMinifiedConfig]{{/if_eq}}

@@ -10,6 +10,11 @@
   ],
   "plugins": ["transform-runtime"],
   "env": {
+    {{#if_eq projectType "lib"}}
+    "library": {
+      "presets": ["es2015"],
+      "plugins": ["babel-plugin-add-module-exports"]
+    },{{/if_eq}}
     "test": {
       "presets": ["env", "stage-2"],
       "plugins": ["istanbul"]

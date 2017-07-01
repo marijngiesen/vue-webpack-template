@@ -70,3 +70,14 @@ exports.styleLoaders = function (options) {
   }
   return output
 }
+{{#if_eq projectType "lib"}}
+// Generate externals object from dependencies
+exports.buildExternalsFromDependencies = function() {
+  var packageJson = require('../package.json');
+  var externals = {};
+  for (var dependency in packageJson.dependencies) {
+    externals[dependency] = dependency;
+  }
+  return externals;
+}
+{{/if_eq}}

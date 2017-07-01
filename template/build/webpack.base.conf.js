@@ -12,7 +12,7 @@ function resolve (dir) {
 }
 
 module.exports = {
-  entry: {
+  {{#unless_eq projectType "lib"}}entry: {
     app: './src/main.{{#if_eq compiler "typescript"}}ts{{else}}js{{/if_eq}}'
   },
   output: {
@@ -21,11 +21,11 @@ module.exports = {
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
-  },
+  },{{/unless_eq}}
   {{#if_eq compiler "typescript"}}
   plugins: [
     new ForkTsCheckerWebpackPlugin({
-      watch: './src' // optional but improves performance (less stat calls)
+      watch: {{#unless_eq projectType "lib"}}'./src'{{/unless_eq}}{{#if_eq projectType "lib"}}['./src', './app']{{/if_eq}} // optional but improves performance (less stat calls)
     })
   ],{{/if_eq}}
   resolve: {
@@ -36,7 +36,8 @@ module.exports = {
       {{/if_eq}}
     },
     modules: [
-      resolve('src'),
+      resolve('src'),{{#if_eq projectType "lib"}}
+      resolve('app'),{{/if_eq}}
       "node_modules"
     ]
   },
@@ -47,7 +48,7 @@ module.exports = {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
-        include: [resolve('src'), resolve('test')],
+        include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')],
         options: {
           formatter: require('eslint-friendly-formatter')
         }
@@ -58,7 +59,7 @@ module.exports = {
         test: /\.ts$/, // tslint doesn't support vue files
         enforce: 'pre',
         loader: 'tslint-loader',
-        include: [resolve('src'), resolve('test')],
+        include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')],
         options: {
           formatter: 'grouped',
           formattersDirectory: 'node_modules/custom-tslint-formatters/formatters'
@@ -79,7 +80,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')]
       },
       {{#if_eq compiler "typescript"}}
       {
@@ -93,7 +94,7 @@ module.exports = {
             transpileOnly: true // Disable type checking to run it in fork
           },
         }],
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')]
       },
       {{/if_eq}}
       {
