@@ -8,7 +8,7 @@ var baseConfig = require('./webpack.base.conf')
 var webpackConfig = merge(baseConfig, {
   {{#if_eq projectType "lib"}}
   entry: {
-    lib: './src'
+    '{{ name }}': './src'
   },{{/if_eq}}
   module: {
     rules: utils.styleLoaders()

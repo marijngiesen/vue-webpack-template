@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "{{ description }}",
   "author": "{{ author }}",
-  "private": true,
+  "private": true,{{#if_eq projectType "lib"}}
+  "main": "dist/{{ name }}.js",{{/if_eq}}
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",

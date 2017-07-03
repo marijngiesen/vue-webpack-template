@@ -3,7 +3,8 @@
 {{/if_eq}}
 .DS_Store
 node_modules/
-dist/
+{{#unless_eq projectType "lib"}}dist/
+{{/unless_eq}}
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

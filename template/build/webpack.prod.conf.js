@@ -15,7 +15,7 @@ var env = {{#if_or unit e2e}}process.env.NODE_ENV === 'testing'
 
 var webpackConfig = merge(baseWebpackConfig, {
   {{#if_eq projectType "lib"}}entry: {
-    lib: './src'
+    '{{ name }}': './src'
   },{{/if_eq}}
   module: {
     rules: utils.styleLoaders({
