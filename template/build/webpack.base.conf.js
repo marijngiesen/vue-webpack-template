@@ -79,14 +79,18 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: utils.buildBabelOptions()
+        },
         include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')]
       },
       {{#if_eq compiler "typescript"}}
       {
         test: /\.ts$/,
         use: [{
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: utils.buildBabelOptions()
           }, {
           loader: 'ts-loader',
           options: {
