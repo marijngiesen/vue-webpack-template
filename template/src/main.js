@@ -12,10 +12,10 @@ Vue.config.productionTip = false{{#if_eq eslintConfig "airbnb"}};{{/if_eq}}
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
   {{#router}}
   router,
   {{/router}}
+  el: '#app',
   {{#if_eq build "runtime"}}
   render: h => h(App){{#if_eq eslintConfig "airbnb"}},{{/if_eq}}
   {{/if_eq}}

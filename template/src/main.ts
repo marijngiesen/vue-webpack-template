@@ -15,10 +15,10 @@ Vue.config.productionTip = false{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
 
 // tslint:disable-next-line:no-unused-expression
 new Vue({
-  el: '#app',
   {{#router}}
   router,
   {{/router}}
+  el: '#app',
   {{#if_eq build 'runtime'}}
   render: (h) => h(App)
   {{/if_eq}}
