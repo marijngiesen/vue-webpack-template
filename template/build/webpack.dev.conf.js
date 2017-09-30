@@ -13,7 +13,7 @@ function resolve (dir) {
 
 module.exports = merge(baseWebpackConfig, {
   {{#if_eq projectType "lib"}}entry: {
-    app: './app/main.ts'
+    app: './app/main.{{#if_eq compiler "typescript"}}ts{{else}}js{{/if_eq}}'
   },{{/if_eq}}
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
