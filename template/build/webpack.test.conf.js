@@ -6,10 +6,14 @@ var merge = require('webpack-merge')
 var baseConfig = require('./webpack.base.conf')
 
 var webpackConfig = merge(baseConfig, {
-  // use inline sourcemap for karma-sourcemap-loader
+  {{#if_eq projectType "lib"}}
+  entry: {
+    '{{ name }}': './src'
+  },{{/if_eq}}
   module: {
     rules: utils.styleLoaders()
   },
+  // use inline sourcemap for karma-sourcemap-loader
   {{#unless_eq compiler "typescript"}}devtool: '#inline-source-map',{{/unless_eq}}
   resolveLoader: {
     alias: {

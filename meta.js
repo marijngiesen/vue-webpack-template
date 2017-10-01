@@ -1,3 +1,5 @@
+var metalsmith = require('./metalsmith')
+
 module.exports = {
   "helpers": {
     "if_or": function (v1, v2, options) {
@@ -23,6 +25,22 @@ module.exports = {
     "author": {
       "type": "string",
       "message": "Author"
+    },
+    "projectType": {
+      "type": "list",
+      "message": "Project type",
+      "choices": [
+        {
+          "name": "Application (Targets end users)",
+          "value": "app",
+          "short": "Application"
+        },
+        {
+          "name": "Library (Targets developers, includes demo application)",
+          "value": "lib",
+          "short": "Library"
+        }
+      ]
     },
     "build": {
       "type": "list",
@@ -136,7 +154,9 @@ module.exports = {
     "test/unit/.tslint.json": "tslint && compiler == 'typescript'",
     "build/webpack.test.conf.js": "unit",
     "test/e2e/**/*": "e2e",
-    "src/router/**/*": "router"
+    "src/router/**/*": "router",
+    "src/**/*.lib.*": "projectType == 'lib'"
   },
-  "completeMessage": "To get started:\n\n  {{^inPlace}}cd {{destDirName}}\n  {{/inPlace}}npm install\n  npm run dev\n\nDocumentation can be found at https://vuejs-templates.github.io/webpack"
+  "completeMessage": "To get started:\n\n  {{^inPlace}}cd {{destDirName}}\n  {{/inPlace}}npm install\n  npm run dev\n\nDocumentation can be found at https://vuejs-templates.github.io/webpack",
+  "metalsmith": metalsmith
 };

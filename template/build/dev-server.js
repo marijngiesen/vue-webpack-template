@@ -10,9 +10,14 @@ var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
+{{#if_eq projectType "lib"}}
+var webpackConfig = require('./webpack.dev.conf')
+{{/if_eq}}
+{{#unless_eq projectType "lib"}}
 var webpackConfig = {{#if_or unit e2e}}(process.env.NODE_ENV === 'testing' || process.env.NODE_ENV === 'production')
   ? require('./webpack.prod.conf')
   : {{/if_or}}require('./webpack.dev.conf')
+{{/unless_eq}}
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -25,8 +30,10 @@ var proxyTable = config.dev.proxyTable
 var app = express()
 var compiler = webpack(webpackConfig)
 
+var publicPath = Array.isArray(webpackConfig) ? webpackConfig[0].output.publicPath : webpackConfig.output.publicPath
+
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
-  publicPath: webpackConfig.output.publicPath,
+  publicPath: publicPath,
   quiet: true
 })
 

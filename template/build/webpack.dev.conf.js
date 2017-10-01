@@ -11,12 +11,10 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-// add hot-reload related code to entry chunks
-Object.keys(baseWebpackConfig.entry).forEach(function (name) {
-  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
-})
-
 module.exports = merge(baseWebpackConfig, {
+  {{#if_eq projectType "lib"}}entry: {
+    app: './app/main.{{#if_eq compiler "typescript"}}ts{{else}}js{{/if_eq}}'
+  },{{/if_eq}}
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
   },{{#unless_eq compiler "typescript"}}
@@ -50,6 +48,11 @@ if (config.dev.hotModuleReload) {
       test: {{#if_eq compiler "typescript"}}/\.vue\.(ts|js)$/{{else}}/\.vue\.js$/{{/if_eq}},
       enforce: 'post',
       use: ['vue-hot-reload-loader'],
-      include: [resolve('src'), resolve('test')]
+      include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')]
     });
 }
+
+// add hot-reload related code to entry chunks
+Object.keys(module.exports.entry).forEach(function (name) {
+  module.exports.entry[name] = ['./build/dev-client'].concat(module.exports.entry[name])
+})

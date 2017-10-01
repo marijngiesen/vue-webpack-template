@@ -8,6 +8,9 @@
 standard .js/.ts files using external .css and .html files. Developer still benefit of Hot Module Reload and 
 scoped CSS though.
 
+> It also adds a Library option to build and distribute a vue component only. In this case, an application is 
+ still used for development, but it won't be packaged in the distribution.
+
 ## Why using this fork ?
 
 You should really consider using this fork if ...
@@ -15,6 +18,7 @@ You should really consider using this fork if ...
 - You have issues with `.vue` files in your favorite code editor.
 - You want to stick to pure `.js`/`.ts` files for some reason.
 - You don't want to put HTML, CSS & Script in a single file.
+- You want to build and distribute a vue component instead of a whole application.
 
 ## Known issues with `.vue` files and TypeScript
 

@@ -1,4 +1,5 @@
 var path = require('path')
+var fs = require('fs')
 var config = require('../config')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -70,3 +71,42 @@ exports.styleLoaders = function (options) {
   }
   return output
 }
+
+// Workaround for .babelrc env merge issues (waiting for babel>=7 .babelrc.js file)
+exports.buildBabelOptions = function() {
+  var babelOptions = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '.babelrc')));
+  var env = babelOptions.env;
+
+  if (env) {
+    delete babelOptions.env;
+
+    for (var key in env) {
+      if (!env.hasOwnProperty(key)) continue;
+
+      if (process.env['BABEL_ENV'] === key) {
+        babelOptions = env[process.env['BABEL_ENV']];
+        break;
+      }
+
+      if (process.env['NODE_ENV'] === key) {
+        babelOptions = env[process.env['NODE_ENV']];
+        break;
+      }
+    }
+  }
+
+  babelOptions.babelrc = false;
+  return babelOptions;
+}
+
+{{#if_eq projectType "lib"}}
+// Generate externals object from dependencies
+exports.buildExternalsFromDependencies = function() {
+  var packageJson = require('../package.json');
+  var externals = {};
+  for (var dependency in packageJson.dependencies) {
+    externals[dependency] = dependency;
+  }
+  return externals;
+}
+{{/if_eq}}
