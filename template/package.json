@@ -16,10 +16,10 @@
     "tslint": "tslint -s node_modules/custom-tslint-formatters/formatters -t grouped 'src/**/*.ts'{{#unit}} 'test/unit/**/*.ts'{{/unit}}{{#e2e}} 'test/e2e/*.ts'{{/e2e}}"{{/tslint}}
   },
   "dependencies": {
-    "vue": "<2.5.0"{{#if_eq compiler "typescript"}},
-    "vue-class-component": "<6.0.0",
-    "vue-property-decorator": "<6.0.0"{{/if_eq}}{{#router}},
-    "vue-router": "<3.0.0"{{/router}}
+    "vue": "^2.5.0"{{#if_eq compiler "typescript"}},
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^6.0.0"{{/if_eq}}{{#router}},
+    "vue-router": "^3.0.0"{{/router}}
   },
   "devDependencies": {
     {{#if_eq compiler "typescript"}}
@@ -124,11 +124,11 @@
     "typescript": "^2.2.1",
     {{/if_eq}}
     "url-loader": "^0.5.8",
-    "vue-loader": "^13.0.4",
+    "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-hot-reload-loader": "^0.1.3",
     "vue-template-loader": "^0.3.0",
-    "vue-template-compiler": "<2.5.0",
+    "vue-template-compiler": "^2.5.0",
     "portfinder": "^1.0.13",
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",

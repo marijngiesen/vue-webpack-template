@@ -9,7 +9,6 @@
     "target": "es6",
     "module": "es2015",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
     "types": [
       {{#if_or unit e2e}}
       "chai",
