@@ -67,7 +67,7 @@ module.exports = {
       "message": "Which language do you want to use?",
       "choices": [
         {
-          "name": "TypeScript (awesome-typescript-loader + babel + vue-class-component)",
+          "name": "TypeScript (ts-loader + babel + vue-class-component)",
           "value": "typescript",
           "short": "typescript"
         },
