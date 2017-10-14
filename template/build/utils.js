@@ -1,10 +1,11 @@
-var path = require('path')
-var fs = require('fs')
-var config = require('../config')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+'use strict'
+const path = require('path')
+const fs = require('fs')
+const config = require('../config')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 exports.assetsPath = function (_path) {
-  var assetsSubDirectory = process.env.NODE_ENV === 'production'
+  const assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
     : config.dev.assetsSubDirectory
   return path.posix.join(assetsSubDirectory, _path)
@@ -13,7 +14,7 @@ exports.assetsPath = function (_path) {
 exports.cssLoaders = function (options) {
   options = options || {}
 
-  var cssLoader = {
+  const cssLoader = {
     loader: 'css-loader',
     options: {
       minimize: process.env.NODE_ENV === 'production',
@@ -23,7 +24,7 @@ exports.cssLoaders = function (options) {
 
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
-    var loaders = [cssLoader]
+    const loaders = [cssLoader]
     if (loader) {
       loaders.push({
         loader: loader + '-loader',
@@ -59,10 +60,10 @@ exports.cssLoaders = function (options) {
 
 // Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
-  var output = []
-  var loaders = exports.cssLoaders(options)
-  for (var extension in loaders) {
-    var loader = loaders[extension]
+  const output = []
+  const loaders = exports.cssLoaders(options)
+  for (const extension in loaders) {
+    const loader = loaders[extension]
     output.push({
       enforce: 'post', // To support scoped css properly
       test: new RegExp('\\.' + extension + '$'),
@@ -74,13 +75,13 @@ exports.styleLoaders = function (options) {
 
 // Workaround for .babelrc env merge issues (waiting for babel>=7 .babelrc.js file)
 exports.buildBabelOptions = function() {
-  var babelOptions = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '.babelrc')));
-  var env = babelOptions.env;
+  let babelOptions = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '.babelrc')));
+  const env = babelOptions.env;
 
   if (env) {
     delete babelOptions.env;
 
-    for (var key in env) {
+    for (const key in env) {
       if (!env.hasOwnProperty(key)) continue;
 
       if (process.env['BABEL_ENV'] === key) {
@@ -102,8 +103,8 @@ exports.buildBabelOptions = function() {
 {{#if_eq projectType "lib"}}
 // Generate externals object from dependencies
 exports.buildExternalsFromDependencies = function() {
-  var packageJson = require('../package.json');
-  var externals = {};
+  const packageJson = require('../package.json');
+  const externals = {};
   for (var dependency in packageJson.dependencies) {
     externals[dependency] = dependency;
   }

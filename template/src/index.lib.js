@@ -1,3 +1,3 @@
-import Hello from './components/Hello.vue'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+import HelloWorld from './components/HelloWorld.vue'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
 
-export default Hello{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+export default HelloWorld{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}

@@ -33,4 +33,4 @@ npm test
 {{/if_or}}
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://toilal.github.io/vue-webpack-template/).
+For a detailed explanation on how things work, check out the [guide](http://toilal.github.io/vue-webpack-template/).

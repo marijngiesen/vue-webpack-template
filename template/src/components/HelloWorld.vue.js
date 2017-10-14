@@ -1,7 +1,7 @@
-import withRender from './Hello.html?style=./Hello.css'{{#if_eq eslintConfig "airbnb"}};{{/if_eq}}
+import withRender from './HelloWorld.html?style=./HelloWorld.css'{{#if_eq eslintConfig "airbnb"}};{{/if_eq}}
 
 export default withRender({
-  name: 'hello',
+  name: 'HelloWorld',
   props: {
     links: {
       type: Boolean,
