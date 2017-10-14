@@ -29,3 +29,8 @@ declare module '*.css' {
   const withRender: WithRender{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
   export default withRender{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
 }
+
+declare module '*.vue' {
+  import Vue from 'vue'
+  export default Vue
+}
