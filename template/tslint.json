@@ -10,7 +10,8 @@
     "extends": "tslint-config-airbnb",
     "rules": {
       "import-name": false,
-      "object-shorthand-properties-first": false
+      "object-shorthand-properties-first": false,
+      "variable-name": [true, "allow-pascal-case"]
     }
 {{/if_eq}}
 }

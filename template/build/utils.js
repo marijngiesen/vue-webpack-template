@@ -65,6 +65,24 @@ exports.cssLoaders = function (options) {
   }
 }
 
+exports.scriptLoaders = function(options) {
+  return {
+    js: 'babel-loader'{{#if_eq compiler "typescript"}},
+    ts: [
+      {
+        loader: 'babel-loader'
+      },
+      {
+        loader: 'ts-loader',
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+          transpileOnly: true // Disable type checking to run it in fork
+        },
+      }
+    ]{{/if_eq}}
+  }
+}
+
 // Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
   const output = []
@@ -72,7 +90,6 @@ exports.styleLoaders = function (options) {
   for (const extension in loaders) {
     const loader = loaders[extension]
     output.push({
-      enforce: 'post', // To support scoped css properly
       test: new RegExp('\\.' + extension + '$'),
       use: loader
     })
@@ -97,33 +114,6 @@ exports.createNotifierCallback = function () {
       icon: path.join(__dirname, 'logo.png')
     })
   }
-}
-
-// Workaround for .babelrc env merge issues (waiting for babel>=7 .babelrc.js file)
-exports.buildBabelOptions = function() {
-  let babelOptions = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '.babelrc')));
-  const env = babelOptions.env;
-
-  if (env) {
-    delete babelOptions.env;
-
-    for (const key in env) {
-      if (!env.hasOwnProperty(key)) continue;
-
-      if (process.env['BABEL_ENV'] === key) {
-        babelOptions = env[process.env['BABEL_ENV']];
-        break;
-      }
-
-      if (process.env['NODE_ENV'] === key) {
-        babelOptions = env[process.env['NODE_ENV']];
-        break;
-      }
-    }
-  }
-
-  babelOptions.babelrc = false;
-  return babelOptions;
 }
 
 {{#if_eq projectType "lib"}}

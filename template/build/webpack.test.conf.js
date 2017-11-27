@@ -4,9 +4,9 @@
 const utils = require('./utils')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-const baseConfig = require('./webpack.base.conf')
+const baseWebpackConfig = require('./webpack.base.conf')
 
-const webpackConfig = merge(baseConfig, {
+const webpackConfig = merge(baseWebpackConfig, {
   {{#if_eq projectType "lib"}}
   entry: {
     '{{ name }}': './src'

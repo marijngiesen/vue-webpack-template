@@ -6,22 +6,23 @@
     },
     "sourceMap": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "target": "es6",
     "module": "es2015",
     "moduleResolution": "node",
     "noImplicitThis": true,
     "types": [
-      {{#if_or unit e2e}}
+      {{#if_eq runner "jest"}}
+      "jest",{{/if_eq}}{{#if_eq runner "karma"}}
       "chai",
       "mocha",
-      "node",
       "sinon",
-      "sinon-chai",
-      {{/if_or}}
+      "sinon-chai",{{/if_eq}}
+      "node",
       "vue"
     ],
     "typeRoots": [
-      "node_modules/@types"
+      "./node_modules/@types"
     ]
   }
 }

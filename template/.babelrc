@@ -13,15 +13,7 @@
       "plugins": ["babel-plugin-add-module-exports"]
     },{{/if_eq}}
     "test": {
-      "presets": [
-        ["env", {
-          "modules": false,
-          "targets": {
-            "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
-          }
-        }],
-        "stage-2"
-      ]{{#if_eq runner "karma"}},
+      "presets": ["env", "stage-2"]{{#if_eq runner "karma"}},
       "plugins": ["istanbul"]{{/if_eq}}{{#if_eq runner "jest"}},
       "plugins": ["transform-es2015-modules-commonjs", "dynamic-import-node"]{{/if_eq}}
     }

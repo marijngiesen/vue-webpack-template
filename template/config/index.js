@@ -28,9 +28,6 @@ module.exports = {
     // in the browser.
     showEslintErrorsInOverlay: false,
 
-    // If true, webpack modules will support hot reloading
-    hotModuleReload: true,
-
     /**
      * Source Maps
      */
