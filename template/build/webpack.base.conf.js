@@ -13,6 +13,7 @@ function resolve (dir) {
 }
 
 module.exports = {
+  context: path.resolve(__dirname, '../'),
   {{#unless_eq projectType "lib"}}entry: {
     app: './src/main.{{#if_eq compiler "typescript"}}ts{{else}}js{{/if_eq}}'
   },
@@ -45,15 +46,16 @@ module.exports = {
   module: {
     rules: [
       {{#eslint}}
-      {
+      ...(config.dev.useEslint? [{
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')],
         options: {
-          formatter: require('eslint-friendly-formatter')
+          formatter: require('eslint-friendly-formatter'),
+          emitWarning: !config.dev.showEslintErrorsInOverlay
         }
-      },
+      }] : []),
       {{/eslint}}
       {{#tslint}}
       {
