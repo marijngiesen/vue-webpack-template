@@ -30,7 +30,7 @@ module.exports = {
     })
   ],{{/if_eq}}
   resolve: {
-    extensions: ['.js', '.vue', {{#if_eq compiler "typescript"}}'.ts', {{/if_eq}}'.json'],
+    extensions: ['.vue', '.js', {{#if_eq compiler "typescript"}}'.ts', {{/if_eq}}'.json'],
     alias: {
       {{#if_eq build "standalone"}}
       'vue$': 'vue/dist/vue.esm.js',
