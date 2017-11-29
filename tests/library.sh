@@ -19,7 +19,7 @@ expect "$testname.expect" "$testname"
 echo "Testing $testname"
 cd $testname
 npm install
-npm run eslint
+npm run lint
 npm run tslint
 npm test
 npm run build

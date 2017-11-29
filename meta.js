@@ -78,12 +78,12 @@ module.exports = {
         },
       ]
     },
-    "eslint": {
+    "lint": {
       "type": "confirm",
       "message": "Use ESLint to lint your JavaScript code?"
     },
-    "eslintConfig": {
-      "when": "eslint",
+    "lintConfig": {
+      "when": "lint",
       "type": "list",
       "message": "Pick an ESLint preset",
       "choices": [
@@ -163,8 +163,8 @@ module.exports = {
     }
   },
   "filters": {
-    ".eslintrc.js": "eslint",
-    ".eslintignore": "eslint",
+    ".eslintrc.js": "lint",
+    ".eslintignore": "lint",
     "tslint.json": "tslint",
     "tsconfig.json": "compiler == 'typescript'",
     "src/**/*.ts": "compiler == 'typescript'",

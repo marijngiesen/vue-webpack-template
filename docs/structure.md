@@ -9,6 +9,7 @@
 │   └── ...
 ├── src/
 │   ├── main.js                 # app entry file
+│   ├── App.vue                 # main app component
 │   ├── App.js                  # main app component script
 │   ├── App.html                # main app component template
 │   ├── App.css                 # main app component styles

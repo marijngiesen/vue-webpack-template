@@ -3,7 +3,6 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-var vueTemplateLoaderConfig = require('./vue-template-loader.conf')
 {{#if_eq compiler "typescript"}}
 var ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 {{/if_eq}}
@@ -34,8 +33,10 @@ module.exports = {
     extensions: ['.js', '.vue', {{#if_eq compiler "typescript"}}'.ts', {{/if_eq}}'.json'],
     alias: {
       {{#if_eq build "standalone"}}
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
       {{/if_eq}}
+      '@': resolve('src'){{#if_eq projectType "lib"}},
+      '#': resolve('app'){{/if_eq}}
     },
     modules: [
       resolve('src'),{{#if_eq projectType "lib"}}
@@ -45,7 +46,7 @@ module.exports = {
   },
   module: {
     rules: [
-      {{#eslint}}
+      {{#lint}}
       ...(config.dev.useEslint? [{
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
@@ -56,7 +57,7 @@ module.exports = {
           emitWarning: !config.dev.showEslintErrorsInOverlay
         }
       }] : []),
-      {{/eslint}}
+      {{/lint}}
       {{#tslint}}
       {
         test: /\.ts$/, // tslint doesn't support vue files
@@ -75,25 +76,15 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
-        test: /\.html$/,
-        loader: 'vue-template-loader',
-        exclude: resolve('index.html'),
-        options: vueTemplateLoaderConfig
-      },
-      {
         test: /\.js$/,
-        use: {
-          loader: 'babel-loader',
-          options: utils.buildBabelOptions()
-        },
+        loader: 'babel-loader',
         include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')]
       },
       {{#if_eq compiler "typescript"}}
       {
         test: /\.ts$/,
         use: [{
-          loader: 'babel-loader',
-          options: utils.buildBabelOptions()
+          loader: 'babel-loader'
           }, {
           loader: 'ts-loader',
           options: {
@@ -104,6 +95,10 @@ module.exports = {
         include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')]
       },
       {{/if_eq}}
+      {
+        test: /\.html?$/,
+        loader: 'raw-loader' // Required for karma test runner
+      },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
@@ -129,5 +124,17 @@ module.exports = {
         }
       }
     ]
+  },
+  node: {
+    // prevent webpack from injecting useless setImmediate polyfill because Vue
+    // source contains it (although only uses it if it's native).
+    setImmediate: false,
+    // prevent webpack from injecting mocks to Node native modules
+    // that does not make sense for the client
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty'
   }
 }
