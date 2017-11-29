@@ -3,17 +3,14 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-{{#if_eq compiler "typescript"}}
-var ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-{{/if_eq}}
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
-  context: path.resolve(__dirname, '../'),
-  {{#unless_eq projectType "lib"}}entry: {
+  context: path.resolve(__dirname, '../'),{{#unless_eq projectType "lib"}}
+  entry: {
     app: './src/main.{{#if_eq compiler "typescript"}}ts{{else}}js{{/if_eq}}'
   },
   output: {
@@ -23,12 +20,6 @@ module.exports = {
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },{{/unless_eq}}
-  {{#if_eq compiler "typescript"}}
-  plugins: [
-    new ForkTsCheckerWebpackPlugin({
-      watch: {{#unless_eq projectType "lib"}}'./src'{{/unless_eq}}{{#if_eq projectType "lib"}}['./src', './app']{{/if_eq}} // optional but improves performance (less stat calls)
-    })
-  ],{{/if_eq}}
   resolve: {
     extensions: ['.vue', '.js', {{#if_eq compiler "typescript"}}'.ts', {{/if_eq}}'.json'],
     alias: {
@@ -88,8 +79,7 @@ module.exports = {
           }, {
           loader: 'ts-loader',
           options: {
-            appendTsSuffixTo: [/\.vue$/],
-            transpileOnly: true // Disable type checking to run it in fork
+            appendTsSuffixTo: [/\.vue$/]
           },
         }],
         include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')]
