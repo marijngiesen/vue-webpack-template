@@ -6,12 +6,9 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-{{#if_eq compiler "typescript"}}
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-{{/if_eq}}
 const portfinder = require('portfinder')
 
-let devWebpackConfig = merge(baseWebpackConfig, {
+const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
   },
@@ -39,10 +36,7 @@ let devWebpackConfig = merge(baseWebpackConfig, {
       poll: config.dev.poll,
     }
   },
-  plugins: [{{#if_eq compiler "typescript"}}
-    new ForkTsCheckerWebpackPlugin({
-      watch: {{#unless_eq projectType "lib"}}'./src'{{/unless_eq}}{{#if_eq projectType "lib"}}['./src', './app']{{/if_eq}} // optional but improves performance (less stat calls)
-    }),{{/if_eq}}
+  plugins: [
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env')
     }),
@@ -57,23 +51,6 @@ let devWebpackConfig = merge(baseWebpackConfig, {
     }),
   ]
 })
-{{#if_eq compiler "typescript"}}
-devWebpackConfig = merge(devWebpackConfig, {
-  module: {
-    rules: [{
-      test: /\.ts$/,
-      use: [{
-        loader: 'babel-loader'
-      }, {
-        loader: 'ts-loader',
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-          transpileOnly: true // Disable type checking to run it in fork
-        },
-      }]
-    }]
-  }
-}){{/if_eq}}
 
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port

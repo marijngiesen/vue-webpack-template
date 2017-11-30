@@ -10,7 +10,7 @@ module.exports = {
     'json'
   ],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',{{#if_eq projectType "lib"}},
+    '^@/(.*)$': '<rootDir>/src/$1'{{#if_eq projectType "lib"}},
     '^#/(.*)$': '<rootDir>/app/$1'{{/if_eq}}
   },
   transform: {

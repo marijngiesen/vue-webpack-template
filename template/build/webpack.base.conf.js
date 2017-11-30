@@ -3,10 +3,17 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+{{#if_eq compiler "typescript"}}
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+{{/if_eq}}
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
+
+const isDevelopment = process.env.NODE_ENV === 'development'
+
+const scriptLoadersOptions = {ts: {transpileOnly: isDevelopment}}
 
 module.exports = {
   context: path.resolve(__dirname, '../'),{{#unless_eq projectType "lib"}}
@@ -30,11 +37,16 @@ module.exports = {
       '#': resolve('app'){{/if_eq}}
     },
     modules: [
-      resolve('src'),{{#if_eq projectType "lib"}}
-      resolve('app'),{{/if_eq}}
       "node_modules"
     ]
-  },
+  },{{#if_eq compiler "typescript"}}
+  plugins: [
+    ...(isDevelopment? [
+      new ForkTsCheckerWebpackPlugin({
+        watch: {{#unless_eq projectType "lib"}}'./src'{{/unless_eq}}{{#if_eq projectType "lib"}}['./src', './app']{{/if_eq}} // optional but improves performance (less stat calls)
+      })
+    ] : [])
+  ],{{/if_eq}}
   module: {
     rules: [
       {{#lint}}
@@ -68,20 +80,13 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        use: utils.scriptLoaders(scriptLoadersOptions).js,
         include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')]
       },
       {{#if_eq compiler "typescript"}}
       {
         test: /\.ts$/,
-        use: [{
-          loader: 'babel-loader'
-          }, {
-          loader: 'ts-loader',
-          options: {
-            appendTsSuffixTo: [/\.vue$/]
-          },
-        }],
+        use: utils.scriptLoaders(scriptLoadersOptions).ts,
         include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')]
       },
       {{/if_eq}}

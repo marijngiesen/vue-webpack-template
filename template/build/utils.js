@@ -1,6 +1,5 @@
 'use strict'
 const path = require('path')
-const fs = require('fs')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const pkg = require('../package.json')
@@ -66,18 +65,16 @@ exports.cssLoaders = function (options) {
 }
 
 exports.scriptLoaders = function(options) {
+  options = options || {}
   return {
-    js: 'babel-loader'{{#if_eq compiler "typescript"}},
+    js: {loader: 'babel-loader', options: options.js}{{#if_eq compiler "typescript"}},
     ts: [
       {
         loader: 'babel-loader'
       },
       {
         loader: 'ts-loader',
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-          transpileOnly: true // Disable type checking to run it in fork
-        },
+        options: options.ts,
       }
     ]{{/if_eq}}
   }
