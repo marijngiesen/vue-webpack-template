@@ -154,8 +154,7 @@ if (config.build.bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
-{{#unless_eq projectType "lib"}}
-module.exports = webpackConfig{{/unless_eq}}{{#if_eq projectType "lib"}}
+{{#if_eq projectType "lib"}}
 const webpackMinifiedConfig = merge(webpackConfig, {
   output: {
     filename: '[name].min.js',
@@ -182,4 +181,5 @@ const webpackMinifiedConfig = merge(webpackConfig, {
   ]
 })
 
-module.exports = [webpackConfig, webpackMinifiedConfig]{{/if_eq}}
+module.exports = [webpackConfig, webpackMinifiedConfig]{{else}}
+module.exports = webpackConfig{{/if_eq}}
