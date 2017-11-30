@@ -10,7 +10,8 @@ module.exports = {
     'json'
   ],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',{{#if_eq projectType "lib"}},
+    '^#/(.*)$': '<rootDir>/app/$1'{{/if_eq}}
   },
   transform: {
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest',{{#if_eq compiler "typescript"}}
