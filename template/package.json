@@ -21,7 +21,7 @@
     {{/if_or}}
     {{#lint}}
     "lint": "eslint --ext .js,.vue src{{#unit}} test/unit/specs{{/unit}}{{#e2e}} test/e2e/specs{{/e2e}}",{{/lint}}{{#tslint}}
-    "tslint": "tslint -s node_modules/custom-tslint-formatters/formatters -t grouped 'src/**/*.ts'{{#unit}} 'test/unit/**/*.ts'{{/unit}}{{#e2e}} 'test/e2e/*.ts'{{/e2e}}",{{/tslint}}
+    "tslint": "tslint -p . -s node_modules/custom-tslint-formatters/formatters -t grouped 'src/**/*.ts'{{#unit}} 'test/unit/**/*.ts'{{/unit}}{{#e2e}} 'test/e2e/*.ts'{{/e2e}}",{{/tslint}}
     "build": "node build/build.js"
   },
   "dependencies": {
