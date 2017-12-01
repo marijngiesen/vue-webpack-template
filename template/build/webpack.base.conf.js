@@ -69,7 +69,8 @@ module.exports = {
         include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')],
         options: {
           formatter: 'grouped',
-          formattersDirectory: 'node_modules/custom-tslint-formatters/formatters'
+          formattersDirectory: 'node_modules/custom-tslint-formatters/formatters',
+          typeCheck: true
         }
       },
       {{/tslint}}
