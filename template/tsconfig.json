@@ -5,7 +5,6 @@
       "@/*": ["src/*"]{{#if_eq projectType "lib"}},
       "#/*": ["app/*"]{{/if_eq}}
     },
-    "declaration": true,
     "sourceMap": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
