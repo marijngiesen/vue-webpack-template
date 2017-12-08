@@ -7,7 +7,6 @@ const sourceMapEnabled = isProduction
   ? config.build.productionSourceMap
   : config.dev.cssSourceMap
 
-
 module.exports = {
   loaders: Object.assign({},
     utils.scriptLoaders({ts: {transpileOnly: isDevelopment}}),
@@ -19,7 +18,7 @@ module.exports = {
   cssSourceMap: sourceMapEnabled,
   cacheBusting: config.dev.cacheBusting,
   transformToRequire: {
-    video: 'src',
+    video: ['src', 'poster'],
     source: 'src',
     img: 'src',
     image: 'xlink:href'

@@ -1,4 +1,15 @@
 var metalsmith = require('./metalsmith')
+const path = require('path');
+const fs = require('fs');
+
+function sortObject(object) {
+  // Based on https://github.com/yarnpkg/yarn/blob/v1.3.2/src/config.js#L79-L85
+  const sortedObject = {};
+  Object.keys(object).sort().forEach(item => {
+    sortedObject[item] = object[item];
+  });
+  return sortedObject;
+}
 
 module.exports = {
   "helpers": {
@@ -133,7 +144,7 @@ module.exports = {
     },
     "unit": {
       "type": "confirm",
-      "message": "Setup unit tests"
+      "message": "Set up unit tests"
     },
     "runner": {
       "when": "unit",
@@ -170,7 +181,7 @@ module.exports = {
     "src/**/*.ts": "compiler == 'typescript'",
     "src/**/*.js": "compiler != 'typescript'",
     "config/test.env.js": "unit || e2e",
-    "build/webpack.test.conf.js": "e2e || (unit && runner === 'karma')",
+    "build/webpack.test.conf.js": "unit && runner === 'karma'",
     "test/unit/specs/**/*.ts": "unit && compiler == 'typescript'",
     "test/unit/specs/**/*.js": "unit && compiler != 'typescript'",
     "test/unit/index.js": "unit && runner === 'karma'",
@@ -182,6 +193,21 @@ module.exports = {
     "src/router/**/*": "router",
     "src/**/*.lib.*": "projectType == 'lib'"
   },
-  "completeMessage": "To get started:\n\n  {{^inPlace}}cd {{destDirName}}\n  {{/inPlace}}npm install\n  npm run dev\n\nDocumentation can be found at https://vuejs-templates.github.io/webpack",
+  "complete": function (data) {
+    const packageJsonFile = path.join(
+      data.inPlace ? "" : data.destDirName,
+      "package.json"
+    );
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonFile));
+    packageJson.devDependencies = sortObject(packageJson.devDependencies);
+    packageJson.dependencies = sortObject(packageJson.dependencies);
+    fs.writeFileSync(
+      packageJsonFile,
+      JSON.stringify(packageJson, null, 2) + "\n"
+    );
+
+    const message = `To get started:\n\n  ${data.inPlace ? '' : `cd ${data.destDirName}\n  `}npm install\n  npm run dev\n\nDocumentation can be found at https://vuejs-templates.github.io/webpack`;
+    console.log("\n" + message.split(/\r?\n/g).map(line => "   " + line).join("\n"));
+  },
   "metalsmith": metalsmith
 };
