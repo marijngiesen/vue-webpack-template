@@ -15,6 +15,17 @@ const isDevelopment = process.env.NODE_ENV === 'development'
 
 const scriptLoadersOptions = {ts: {transpileOnly: isDevelopment}}
 
+const createLintingRule = () => ({
+  test: /\.(js|vue)$/,
+  loader: 'eslint-loader',
+  enforce: 'pre',
+  include: [resolve('src'){{#if_eq projectType "lib"}}, resolve('app'){{/if_eq}}, resolve('test')],
+  options: {
+    formatter: require('eslint-friendly-formatter'),
+    emitWarning: !config.dev.showEslintErrorsInOverlay
+  }
+})
+
 module.exports = {
   context: path.resolve(__dirname, '../'),{{#unless_eq projectType "lib"}}
   entry: {
@@ -50,16 +61,7 @@ module.exports = {
   module: {
     rules: [
       {{#lint}}
-      ...(config.dev.useEslint? [{
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')],
-        options: {
-          formatter: require('eslint-friendly-formatter'),
-          emitWarning: !config.dev.showEslintErrorsInOverlay
-        }
-      }] : []),
+      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {{/lint}}
       {{#tslint}}
       {
