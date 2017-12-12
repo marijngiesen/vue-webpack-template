@@ -1,8 +1,8 @@
-import Vue from 'vue'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
-import Component from 'vue-class-component'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+import Vue from 'vue'
+import Component from 'vue-class-component'
 {{#unless router}}
 
-import HelloWorld from './components/HelloWorld.vue'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+import HelloWorld from './components/HelloWorld.vue'
 {{/unless}}
 
 @Component{{#unless router}}({

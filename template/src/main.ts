@@ -2,16 +2,16 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 {{/if_eq}}
-import Vue from 'vue'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+import Vue from 'vue'
 
-import './hooks'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}} // This must be imported before any component
+import './hooks' // This must be imported before any component
 
-import App from './App.vue'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+import App from './App.vue'
 {{#router}}
-import router from './router'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+import router from './router'
 {{/router}}
 
-Vue.config.productionTip = false{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+Vue.config.productionTip = false
 
 // tslint:disable-next-line:no-unused-expression
 new Vue({
@@ -26,4 +26,4 @@ new Vue({
   template: '<App/>',
   components: { App }{{#if_eq tslintConfig "airbnb"}},{{/if_eq}}
   {{/if_eq}}
-}){{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+})

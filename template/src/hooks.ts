@@ -1,7 +1,7 @@
 // Use this file to register components custom hooks.
 // @see https://github.com/vuejs/vue-class-component#adding-custom-hooks
 {{#router}}
-import Component from 'vue-class-component'{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+import Component from 'vue-class-component'
 
 {{/router}}
 {{#router}}
@@ -10,8 +10,8 @@ Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',
   'beforeRouteUpdate'{{#if_eq tslintConfig "airbnb"}},{{/if_eq}}
-]){{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+])
 {{/router}}
 
 // Workaround for https://github.com/babel/babel-loader/issues/188
-export default undefined{{#if_eq tslintConfig "airbnb"}};{{/if_eq}}
+export default undefined
