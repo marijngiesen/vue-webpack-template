@@ -3,7 +3,7 @@
 // we are also using it with karma-webpack
 //   https://github.com/webpack/karma-webpack
 
-var webpackConfig = require('../../build/webpack.test.conf'){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+var webpackConfig = require('../../build/webpack.test.conf')
 
 module.exports = function (config) {
   config.set({
@@ -20,10 +20,10 @@ module.exports = function (config) {
     },
     webpack: webpackConfig,
     webpackMiddleware: {
-      noInfo: true{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
+      noInfo: true
     },
     coverageReporter: {
-      type: 'in-memory'{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
+      type: 'in-memory'
     },
     {{#if_eq compiler "es2015"}}
     remapOptions: {
@@ -40,7 +40,7 @@ module.exports = function (config) {
     remapCoverageReporter: {
       'text-summary': null,
       lcovonly: './test/unit/coverage/lcov.info',
-      html: './test/unit/coverage/lcov-report'{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
-    }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
-  }){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-}{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+      html: './test/unit/coverage/lcov-report'
+    }
+  })
+}
