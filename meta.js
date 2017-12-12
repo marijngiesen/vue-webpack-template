@@ -121,7 +121,7 @@ module.exports = {
       "message": "Use TSLint to lint your TypeScript code?"
     },
     "tslintConfig": {
-      "when": "tslint",
+      "when": "compiler == 'typescript' && tslint",
       "type": "list",
       "message": "Pick a TSLint preset",
       "choices": [
@@ -176,7 +176,7 @@ module.exports = {
   "filters": {
     ".eslintrc.js": "lint",
     ".eslintignore": "lint",
-    "tslint.json": "tslint",
+    "tslint.json": "compiler == 'typescript' && tslint",
     "tsconfig.json": "compiler == 'typescript'",
     "src/**/*.ts": "compiler == 'typescript'",
     "src/**/*.js": "compiler != 'typescript'",
