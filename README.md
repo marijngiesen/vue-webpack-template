@@ -4,30 +4,12 @@
 
 > This template is Vue 2.0 compatible.
 
-> This is a fork of official webpack template. It adds a TypeScript option and allow building components with 
-standard .js/.ts files using external .css and .html files. Developer still benefit of Hot Module Reload and 
-scoped CSS though.
-
-> It also adds a Library option to build and distribute a vue component only. In this case, an application is 
- still used for development, but it won't be packaged in the distribution.
-
-## Why using this fork ?
-
-You should really consider using this fork if ...
-
-- You have issues with `.vue` files in your favorite code editor.
-- You want to stick to pure `.js`/`.ts` files for some reason.
-- You don't want to put HTML, CSS & Script in a single file.
-- You want to build and distribute a vue component instead of a whole application.
+> This is a fork of official webpack template that brings more options, like TypeScript, Library, Class-Style 
+components ... 
 
 ## Known issues with `.vue` files and TypeScript
 
-- Intellij IDEA (and probably others) can't resolve TypeScript modules coming from `.vue` files, making navigation in a vue project really 
-painfull.
 - [tslint doesn't support `.vue` files](https://github.com/palantir/tslint/issues/2099).
-
-Despite those issues exists, you can still import `.vue` [Single Files Components](https://vuejs.org/v2/guide/single-file-components.html) with this 
-boilerplate from your own code or dependency.
 
 ## Documentation
 
@@ -59,7 +41,7 @@ The development server will run on port 8080 by default. If that port is already
 ## What's Included
 
 - `npm run dev`: first-in-class development experience.
-  - Webpack + `vue-template-loader` + `vue-hot-reload-loader` for Vue components.
+  - Webpack + `vue-loader` for single file Vue components.
   - State preserving hot-reload
   - State preserving compilation error overlay
   - Lint-on-save with ESLint
