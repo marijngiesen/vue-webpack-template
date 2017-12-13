@@ -206,6 +206,7 @@ module.exports = {
     'src/**/*.ts': "compiler == 'typescript'",
     'src/**/*.js': "compiler != 'typescript'",
     'config/test.env.js': 'unit || e2e',
+    'build/*.lib.*': "projectType == 'lib'",
     'build/webpack.test.conf.js': "unit && runner === 'karma'",
     'test/unit/specs/**/*.ts': "unit && compiler == 'typescript'",
     'test/unit/specs/**/*.js': "unit && compiler != 'typescript'",
