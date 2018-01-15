@@ -2,22 +2,12 @@
   <div id="app">
     <img src="./assets/logo.png">
     {{#router}}
-    <router-view></router-view>
+    <router-view/>
     {{else}}
-    <HelloWorld></HelloWorld>
+    <HelloWorld/>
     {{/router}}
   </div>
 </template>
-<style scoped>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
 {{#if_eq compiler "typescript"}}<script lang="ts">
 import Vue from 'vue'
 {{#classStyle}}import Component from 'vue-class-component'
@@ -41,7 +31,7 @@ import Component from 'vue-class-component'
 
 {{/classStyle}}
 {{#unless router}}
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld'
 
 {{/unless}}
 {{#classStyle}}@Component{{#unless router}}({
@@ -54,3 +44,14 @@ export default class App extends Vue {
   components: { HelloWorld }{{/router}}
 }{{/classStyle}}
 </script>{{/if_eq}}
+
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>

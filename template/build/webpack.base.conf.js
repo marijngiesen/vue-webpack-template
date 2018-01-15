@@ -53,7 +53,7 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       {{/if_eq}}
       '@': resolve('src'){{#if_eq projectType "lib"}},
-      '#': resolve('app'){{/if_eq}}
+      '#': resolve('app'){{/if_eq}},
     },
     modules: [
       "node_modules"
@@ -81,7 +81,7 @@ module.exports = {
       {
         test: /\.js$/,
         use: utils.scriptLoaders(vueLoaderConfig.scriptLoadersOptions).js,
-        include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test')]
+        include: [resolve('src'),{{#if_eq projectType "lib"}} resolve('app'),{{/if_eq}} resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {{#if_eq compiler "typescript"}}
       {

@@ -7,7 +7,7 @@ import Vue from 'vue'
 import './hooks' // This must be imported before any component
 
 {{/classStyle}}
-import App from './App.vue'
+import App from './App'
 {{#router}}
 import router from './router'
 {{/router}}
@@ -24,7 +24,7 @@ new Vue({
   render: h => h(App)
   {{/if_eq}}
   {{#if_eq build "standalone"}}
-  template: '<App/>',
-  components: { App }
+  components: { App },
+  template: '<App/>'
   {{/if_eq}}
 })

@@ -1,4 +1,4 @@
-# vue-webpack-template [![Build Status](https://travis-ci.org/Toilal/vue-webpack-template.svg?branch=master)](https://travis-ci.org/Toilal/vue-webpack-template)
+# vue-webpack-boilerplate
 
 > A full-featured Webpack setup with hot-reload, lint-on-save, unit testing & css extraction.
 

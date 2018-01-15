@@ -22,7 +22,7 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     process.stdout.write(stats.toString({
       colors: true,
       modules: false,
-      children: true,
+      children: {{#if_eq compiler "typescript"}}true{{else}}false{{/if_eq}},
       chunks: false,
       chunkModules: false
     }) + '\n\n')
